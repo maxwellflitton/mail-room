@@ -6,26 +6,25 @@ pub mod json_parser {
     use bytes::Bytes;
     use serde_json;
 
+    /// Data that describes the data passed into the server.
     pub struct RequestBody {
-        pub content: HashMap<String, serde_json::Value>,
-        pub complete: bool
+        /// data passed into the server converted from bytes
+        pub content: HashMap<String, serde_json::Value>
     }
 
     impl RequestBody {
 
+        /// Creates a new RequestBody struct from bytes.
+        ///
+        /// # Arguments
+        ///
+        /// * `byte_stream` - bytes passed into the server
+        ///
+        /// # Returns
+        /// Data packed in a HashMap
         pub fn new(byte_stream: Bytes) -> RequestBody {
-            let mut is_complete = true;
             let params: HashMap<String, serde_json::Value> = serde_json::from_slice(&byte_stream).unwrap();
-
-            if params.get("message") == None {
-                is_complete = false;
-            }
-            if params.get("type") == None {
-                is_complete = false;
-            }
-
-            RequestBody {content: params, complete: is_complete}
-
+            RequestBody {content: params}
         }
     }
 }
