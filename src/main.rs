@@ -30,12 +30,7 @@ async fn handle(req: Request<Body>) -> Result<Response<Body>, hyper::Error> {
             let role = body.content.get("role").unwrap().to_string();
 
             let result = user_roles::user_roles::UserRole::new(token, role);
-
-            if result.success == false {
-                Ok(Response::new(Body::from(result.pack())))
-            } else {
-                Ok(Response::new(Body::from(result.pack())))
-            }
+            Ok(Response::new(Body::from(result.pack())))
         },
 
         (&Method::GET, "/roles") => {
@@ -44,12 +39,7 @@ async fn handle(req: Request<Body>) -> Result<Response<Body>, hyper::Error> {
             let token = body.content.get("token").unwrap().to_string();
 
             let result = user_roles::user_roles::UserRole::get(token);
-
-            if result.success == false {
-                Ok(Response::new(Body::from(result.pack())))
-            } else {
-                Ok(Response::new(Body::from(result.pack())))
-            }
+            Ok(Response::new(Body::from(result.pack())))
         },
 
         _ => {
